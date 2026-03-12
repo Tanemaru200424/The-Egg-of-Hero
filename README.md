@@ -16,6 +16,7 @@ Unity2021.3.2f1
 C#
 
 ## 工夫した点
+* 簡単な音量設定機能を実装しました。
 * ダメージを受けるオブジェクトが共通で持つインターフェース「IDamageable」を実装しました。攻撃側は攻撃を受けたオブジェクトのDamage(int)を呼び、ダメージを与えます。共通仕様により役割を明確にしました。
 * TimeScaleを操作することによって、アクションシーンの一時停止、再開を実装しました。
 * 一時停止中に表示されるウィンドウからゲームの中断、リスタートができるようにしました。これによりゲーム体験が合わなかった場合すぐに他のゲームに切り替えられるようにしました。
@@ -24,13 +25,24 @@ C#
 * 行動価値関数によって、敵ごとに特徴的な行動をするようにしました。敵に移動方向切り替えと攻撃にクールタイムを設定しました。これらクールタイム待機後、移動方向切り替えと攻撃開始を行います。移動方向の優先度は敵によって固定です。攻撃選択の優先度はプレイヤーと敵の位置関係に依存します。
 
 ## スクリプトの位置について
-Assets/
+```
+Assets/  
 └ Scene/ - Interfaces.cs（IDaageableの定義のみです。元はゲーム中の様々なインターフェースを格納する予定でした。）
-  └ ACTION_GameObject/ - DepthExpression.cs（キャラクターのイラストレイヤー制御をします。）
-    └ ACTION_GameObject_Charactor/
-     ├ Enemy/ - Enemy_AttackPower.cs（敵の攻撃判定スクリプトです。）
-     |  └ Enemy_Kinds/敵の名前/敵の名前_Script/（各敵の制御スクリプトをまとめています。）
-     └ Player/Player_Script/（プレイヤーの制御スクリプトをまとめています。）
+  |      - GamaeManager.cs（Escによるゲームの強制終了、音量データの保持、アクションシーンへの敵データの保持を行います。）
+  ├ ACTION/
+  | ├ ACTION_GameObject/ - DepthExpression.cs（キャラクターのイラストレイヤー制御をします。）  
+  | | └ ACTION_GameObject_Charactor/  
+  | |   ├ Enemy/ - Enemy_AttackPower.cs（敵の攻撃判定スクリプトです。）  
+  | |   | └ Enemy_Kinds/敵の名前/敵の名前_Script/（各敵の制御スクリプトをまとめています。）  
+  | |   └ Player/Player_Script/（プレイヤーの制御スクリプトをまとめています。）
+  | └ ACTION_Script/ - ACTION_Script_Input_Pause.cs（アクションシーンの一時停止、再開を制御します。）
+  |   |              - ACTION_Manager.cs（アクションシーンの流れとプレイヤーの入力を制御します。）
+  |   ├ ACTION_Script_Button/（アクションシーン中のボタンの機能を実装しています。）
+  |   └ ACTION_Script_Image/（アクション開始時のステージ背景の設定を行います。）
+  └ TITLE/ - TITLE_Manager.cs（タイトルシーンの流れを制御します。）
+    ├ TITLE_Script_Button/（タイトルシーン中のボタンの機能を実装しています。）
+    └ TITLE_Script_Text/（音量設定反映時のテキスト変更を実装しています。）
+```
 
 ## 操作方法（PC / ゲームパッド）
 ### UI操作
