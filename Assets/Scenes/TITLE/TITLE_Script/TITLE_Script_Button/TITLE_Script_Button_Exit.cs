@@ -15,6 +15,8 @@ public class TITLE_Script_Button_Exit : MonoBehaviour
     public void OnClick()
     {
         sesource.PlayOneShot(clip);
-        TITLEManager.instance.StartCoroutine("ExitGame");
+        #if !UNITY_WEBGL
+            TITLEManager.instance.StartCoroutine("ExitGame");
+        #endif
     }
 }
